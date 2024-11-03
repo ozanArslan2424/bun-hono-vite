@@ -1,6 +1,9 @@
 import React from "react";
 
-export function useFetch<T>(url: string, { autoInvoke = true, ...options } = {}) {
+export function useFetch<T>(
+  url: string,
+  { autoInvoke = true, ...options } = {},
+) {
   const [data, setData] = React.useState<T | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState(null);

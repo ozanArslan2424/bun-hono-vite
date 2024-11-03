@@ -6,7 +6,10 @@ type ReturnType<T> = {
   errors?: { [key in keyof T]?: string[] | undefined };
 };
 
-export async function safeParse<T>(formData: FormData, schema: z.ZodTypeAny): Promise<ReturnType<T>> {
+export async function safeParse<T>(
+  formData: FormData,
+  schema: z.ZodTypeAny,
+): Promise<ReturnType<T>> {
   const values = Object.fromEntries(formData);
 
   const parsed = schema.safeParse(values) as z.SafeParseReturnType<T, T>;

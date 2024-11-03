@@ -17,7 +17,10 @@ type ContextValueProps = {
 
 type State = { isOpen: boolean; transition: boolean };
 type Action =
-  | { type: "open" | "collapse"; payload: { refCurrent: HTMLElement; width: string } }
+  | {
+      type: "open" | "collapse";
+      payload: { refCurrent: HTMLElement; width: string };
+    }
   | { type: "stopTransition" };
 
 const SidebarContext = createContext<ContextValueProps | null>(null);
@@ -107,9 +110,9 @@ const SidebarContent = (props: SideMenuProps) => {
     <aside
       ref={sidebarRef}
       className={cn(
-        "group/sidebar sticky top-0 z-10 flex h-screen flex-col gap-2 border-r bg-background text-foreground",
+        "group/sidebar bg-background text-foreground sticky top-0 z-10 flex h-screen flex-col gap-2 border-r",
         transition && "transition-all duration-300 ease-in-out",
-        props.className,
+        props.className
       )}
       style={{
         width: width[isMobile ? "mobile" : "desktop"][isOpen ? "open" : "collapse"],
@@ -155,14 +158,14 @@ export function SidebarLink({ to, label, icon, children }: SidebarLinkProps) {
   return (
     <li>
       <Link
-        to={to}
+        href={to}
         asButton
         variant="outline"
         size={isOpen ? "sm" : "icon"}
         className={cn(
           "w-full",
           isOpen ? "justify-start" : "justify-center",
-          isOpen && children ? "rounded-b-none" : "rounded-md",
+          isOpen && children ? "rounded-b-none" : "rounded-md"
         )}
       >
         {icon}
@@ -194,7 +197,7 @@ export function SidebarSubLink({ to, label }: SidebarSubLinkProps) {
   const { pathname } = useLocation();
   return (
     <Link
-      to={to}
+      href={to}
       asButton
       variant="outline"
       size="sm"

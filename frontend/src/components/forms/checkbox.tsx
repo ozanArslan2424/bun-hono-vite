@@ -25,7 +25,11 @@ export function Checkbox({ label, errors, ...rest }: CheckboxProps) {
         <input {...rest} type="checkbox" className="hidden" checked={checked} />
         {label && <span className="label-text">{label}</span>}
 
-        {errors && errors.length > 0 && <span className="error-text">{errors.map((error) => error + " ")}</span>}
+        {errors && errors.length > 0 && (
+          <span className="error-text">
+            {errors.map((error) => error + " ")}
+          </span>
+        )}
       </div>
     </label>
   );

@@ -15,7 +15,11 @@ export function useForm<T>(
   const [errors, setErrors] = useState<Errors>(options.initialErrors);
   const [isPending, setIsPending] = useState(false);
 
-  function field(name: keyof T): { id: string; name: string; error: string[] | undefined } {
+  function field(name: keyof T): {
+    id: string;
+    name: string;
+    error: string[] | undefined;
+  } {
     return {
       id: name as string,
       name: name as string,

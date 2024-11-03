@@ -1,8 +1,4 @@
-/* eslint-disable no-var */
-// only works with var
-var nodemailer = require("nodemailer");
-
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+import nodemailer from "nodemailer";
 
 type EmailProps = {
   userId: string;
@@ -10,18 +6,23 @@ type EmailProps = {
   verificationToken: string;
 };
 
-export const sendVerificationEmail = async (props: EmailProps) => {
-  var transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.NEXT_PUBLIC_EMAIL_FROM,
-      pass: process.env.NEXT_PUBLIC_EMAIL_PASSWORD,
-    },
-  });
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+const emailFrom = process.env.NEXT_PUBLIC_EMAIL_FROM;
+const emailPassword = process.env.NEXT_PUBLIC_EMAIL_PASSWORD;
 
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: emailFrom,
+    pass: emailPassword,
+  },
+});
+
+export const sendVerificationEmail = async (props: EmailProps) => {
   const verificationURL = `${baseURL}/auth/onboarding/verify-email?userId=${props.userId}&userEmail=${props.userEmail}&verificationToken=${props.verificationToken}`;
 
-  const mail = {
+  const mailOptions = {
+    from: emailFrom,
     to: props.userEmail,
     subject: "Classes Email Verification.",
     text: `Complete your registration using this code: ${props.verificationToken} or by clicking this link: ${verificationURL}`,
@@ -37,15 +38,7 @@ export const sendVerificationEmail = async (props: EmailProps) => {
       `,
   };
 
-  var mailOptions = {
-    from: process.env.NEXT_PUBLIC_EMAIL_FROM,
-    to: mail.to,
-    subject: mail.subject,
-    text: mail.text,
-    html: mail.html,
-  };
-
-  transporter.sendMail(mailOptions, function (error: Error, info: any) {
+  transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       throw new Error(error.message);
     } else {
@@ -56,17 +49,10 @@ export const sendVerificationEmail = async (props: EmailProps) => {
 };
 
 export const sendPasswordResetEmail = async (props: EmailProps) => {
-  var transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.NEXT_PUBLIC_EMAIL_FROM,
-      pass: process.env.NEXT_PUBLIC_EMAIL_PASSWORD,
-    },
-  });
-
   const resetURL = `${baseURL}/auth/reset-password?userId=${props.userId}&userEmail=${props.userEmail}&verificationToken=${props.verificationToken}`;
 
-  const mail = {
+  const mailOptions = {
+    from: emailFrom,
     to: props.userEmail,
     subject: "Password Reset Request",
     text: `You requested a password reset. Use this code: ${props.verificationToken} or click this link: ${resetURL}`,
@@ -82,15 +68,7 @@ export const sendPasswordResetEmail = async (props: EmailProps) => {
       `,
   };
 
-  var mailOptions = {
-    from: process.env.NEXT_PUBLIC_EMAIL_FROM,
-    to: mail.to,
-    subject: mail.subject,
-    text: mail.text,
-    html: mail.html,
-  };
-
-  transporter.sendMail(mailOptions, function (error: Error, info: any) {
+  transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       throw new Error(error.message);
     } else {

@@ -52,9 +52,9 @@ type DropdownMenuButtonProps = React.ComponentProps<typeof Button> & {
 const DropdownMenuSubTrigger = ({ className, inset, children, ...props }: DropdownMenuSubTriggerProps) => (
   <DropdownMenuPrimitive.SubTrigger
     className={cn(
-      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-secondary data-[state=open]:bg-secondary",
+      "focus:bg-secondary data-[state=open]:bg-secondary flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none",
       inset && "pl-8",
-      className,
+      className
     )}
     {...props}
   >
@@ -66,8 +66,8 @@ const DropdownMenuSubTrigger = ({ className, inset, children, ...props }: Dropdo
 const DropdownMenuSubContent = ({ className, ...props }: DropdownMenuSubContentProps) => (
   <DropdownMenuPrimitive.SubContent
     className={cn(
-      "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] overflow-hidden rounded-md border border-secondary bg-background p-1 text-foreground shadow-lg",
-      className,
+      "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 border-secondary bg-background text-foreground z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-lg",
+      className
     )}
     {...props}
   />
@@ -78,8 +78,8 @@ const DropdownMenuContent = ({ className, sideOffset = 4, ...props }: DropdownMe
     <DropdownMenuPrimitive.Content
       sideOffset={sideOffset}
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-[999999] min-w-[8rem] overflow-hidden rounded-md border border-secondary bg-background p-1 text-foreground shadow-md",
-        className,
+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 border-secondary bg-background text-foreground z-[999999] min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md",
+        className
       )}
       {...props}
     />
@@ -89,9 +89,9 @@ const DropdownMenuContent = ({ className, sideOffset = 4, ...props }: DropdownMe
 const DropdownMenuItem = ({ className, inset, ...props }: DropdownMenuItemProps) => (
   <DropdownMenuPrimitive.Item
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-secondary focus:text-secondary-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "focus:bg-secondary focus:text-secondary-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       inset && "pl-8",
-      className,
+      className
     )}
     {...props}
   />
@@ -100,8 +100,8 @@ const DropdownMenuItem = ({ className, inset, ...props }: DropdownMenuItemProps)
 const DropdownMenuCheckboxItem = ({ className, children, checked, ...props }: DropdownMenuCheckboxItemProps) => (
   <DropdownMenuPrimitive.CheckboxItem
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-secondary focus:text-secondary-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className,
+      "focus:bg-secondary focus:text-secondary-foreground relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
     )}
     checked={checked}
     {...props}
@@ -118,8 +118,8 @@ const DropdownMenuCheckboxItem = ({ className, children, checked, ...props }: Dr
 const DropdownMenuRadioItem = ({ className, children, ...props }: DropdownMenuRadioItemProps) => (
   <DropdownMenuPrimitive.RadioItem
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-secondary focus:text-secondary-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className,
+      "focus:bg-secondary focus:text-secondary-foreground relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
     )}
     {...props}
   >
@@ -140,7 +140,7 @@ const DropdownMenuLabel = ({ className, inset, ...props }: DropdownMenuLabelProp
 );
 
 const DropdownMenuSeparator = ({ className, ...props }: DropdownMenuSeparatorProps) => (
-  <DropdownMenuPrimitive.Separator className={cn("-mx-1 my-1 h-px bg-secondary", className)} {...props} />
+  <DropdownMenuPrimitive.Separator className={cn("bg-secondary -mx-1 my-1 h-px", className)} {...props} />
 );
 
 const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
@@ -151,11 +151,11 @@ const DropdownMenuLink = ({ className, to, ...props }: DropdownMenuLinkProps) =>
   return (
     <Link
       {...props}
-      to={to}
+      href={to}
       className={cn(
-        "relative flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm outline-none transition-colors focus:bg-secondary focus:text-secondary-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-        "cursor-pointer hover:bg-secondary hover:text-secondary-foreground",
-        className,
+        "focus:bg-secondary focus:text-secondary-foreground relative flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "hover:bg-secondary hover:text-secondary-foreground cursor-pointer",
+        className
       )}
     />
   );
@@ -167,10 +167,10 @@ const DropdownMenuButton = ({ className, variant, size, ...props }: DropdownMenu
     variant={variant || "ghost"}
     size={size || "sm"}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm outline-none transition-colors focus:bg-secondary focus:text-secondary-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "focus:bg-secondary focus:text-secondary-foreground relative flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       "w-full justify-start",
-      "cursor-pointer hover:bg-secondary hover:text-secondary-foreground",
-      className,
+      "hover:bg-secondary hover:text-secondary-foreground cursor-pointer",
+      className
     )}
   />
 );

@@ -25,7 +25,11 @@ export function SyntaxHighlighter({ fixedHeight }: SyntaxHighlighterProps) {
         overflowY: "scroll",
       }}
     >
-      <TextInput onChange={setContent} onHeightChange={handleHeightChange} initialHeight={fixedHeight} />
+      <TextInput
+        onChange={setContent}
+        onHeightChange={handleHeightChange}
+        initialHeight={fixedHeight}
+      />
       <TextView content={content} />
     </div>
   );
@@ -76,7 +80,13 @@ const defaultRegex = {
   keyword: /[A-Za-z]+:\s/i,
 };
 
-const TextView = ({ content, matchRules }: { content: string; matchRules?: MatchProps[] }) => {
+const TextView = ({
+  content,
+  matchRules,
+}: {
+  content: string;
+  matchRules?: MatchProps[];
+}) => {
   const defaultMatches = useMemo(() => {
     const matches: MatchProps[] = [
       { regex: defaultRegex.step, className: "bg-yellow-400/30" },
@@ -95,7 +105,9 @@ const TextView = ({ content, matchRules }: { content: string; matchRules?: Match
   }, [matchRules]);
 
   const splitter = useMemo(() => {
-    return new RegExp(`(${defaultMatches.map((match) => match.regex.source).join("|")})`);
+    return new RegExp(
+      `(${defaultMatches.map((match) => match.regex.source).join("|")})`,
+    );
   }, [defaultMatches]);
 
   function processContent(text: string) {
@@ -113,5 +125,9 @@ const TextView = ({ content, matchRules }: { content: string; matchRules?: Match
     });
   }
 
-  return <div className="pointer-events-none absolute">{processContent(content)}</div>;
+  return (
+    <div className="pointer-events-none absolute">
+      {processContent(content)}
+    </div>
+  );
 };

@@ -1,30 +1,34 @@
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { createLink, LinkComponent, useLocation } from "@tanstack/react-router";
 import { VariantProps } from "class-variance-authority";
 import React from "react";
-import { Link as DOMLink, useLocation } from "react-router-dom";
 
-export type LinkProps = React.ComponentPropsWithoutRef<typeof DOMLink> &
+export type BasicLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
   VariantProps<typeof buttonVariants> & {
     asButton?: boolean;
     activeclassname?: string;
     children?: React.ReactNode;
   };
 
-const Link = React.forwardRef<React.ElementRef<typeof DOMLink>, LinkProps>((props, ref) => {
+const BasicLink = React.forwardRef<HTMLAnchorElement, BasicLinkProps>((props, ref) => {
   const { asButton, children, variant, size, ...rest } = props;
   const location = useLocation();
 
-  const isActive = location.pathname === props.to;
+  const isActive = location.pathname === props.href;
   const className = props.className + " " + (isActive ? props.activeclassname : "");
 
   return (
-    <DOMLink {...rest} className={cn(asButton ? buttonVariants({ variant, size, className }) : className)} ref={ref}>
+    <a {...rest} className={cn(asButton ? buttonVariants({ variant, size, className }) : className)} ref={ref}>
       {children}
-    </DOMLink>
+    </a>
   );
 });
 
-Link.displayName = "Link";
+const CreatedLink = createLink(BasicLink);
+
+const Link: LinkComponent<typeof BasicLink> = (props) => {
+  return <CreatedLink {...props} />;
+};
 
 export default Link;

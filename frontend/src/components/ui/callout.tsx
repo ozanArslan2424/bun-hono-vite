@@ -1,5 +1,10 @@
 import { cn } from "@/lib/utils";
-import { CircleAlertIcon, CircleCheckIcon, InfoIcon, TriangleAlertIcon } from "lucide-react";
+import {
+  CircleAlertIcon,
+  CircleCheckIcon,
+  InfoIcon,
+  TriangleAlertIcon,
+} from "lucide-react";
 
 type CalloutProps = {
   children?: React.ReactNode;
@@ -37,8 +42,15 @@ export function Callout(props: CalloutProps) {
   if (!children || children === "") return null;
 
   return (
-    <div className={cn("flex items-center gap-2 rounded-lg border-2 p-2 font-semibold", styles(type))}>
-      <div className="grid aspect-square h-full place-content-center p-4">{icons(type)}</div>
+    <div
+      className={cn(
+        "flex items-center gap-2 rounded-lg border-2 p-2 font-semibold",
+        styles(type),
+      )}
+    >
+      <div className="grid aspect-square h-full place-content-center p-4">
+        {icons(type)}
+      </div>
       <div>{children}</div>
     </div>
   );

@@ -7,25 +7,37 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: colors.neutral["100"],
-        foreground: colors.neutral["950"],
-        border: colors.neutral["400"],
-        ring: colors.neutral["900"],
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        border: "hsl(var(--border))",
+        ring: "hsl(var(--ring))",
         primary: {
-          DEFAULT: colors.neutral["950"],
-          foreground: colors.neutral["100"],
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: colors.neutral["200"],
-          foreground: colors.neutral["900"],
-        },
-        accent: {
-          DEFAULT: colors.neutral["500"],
-          foreground: colors.neutral["100"],
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
         },
         muted: {
-          DEFAULT: colors.neutral["400"],
-          foreground: colors.neutral["500"],
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        popver: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
       },
     },

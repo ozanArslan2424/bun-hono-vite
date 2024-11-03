@@ -8,7 +8,11 @@ type SeparatorProps = {
   orientation?: "horizontal" | "vertical";
 } & React.ComponentPropsWithoutRef<"div">;
 
-export function Separator({ className, orientation = "horizontal", ...props }: SeparatorProps) {
+export function Separator({
+  className,
+  orientation = "horizontal",
+  ...props
+}: SeparatorProps) {
   return (
     <div
       className={cn(

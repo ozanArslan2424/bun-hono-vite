@@ -6,7 +6,13 @@ type ProProps = {
   value: number;
 } & React.ComponentProps<"progress">;
 
-const Progress = ({ total, value, children, className, ...props }: ProProps) => {
+const Progress = ({
+  total,
+  value,
+  children,
+  className,
+  ...props
+}: ProProps) => {
   return (
     <progress
       value={value}

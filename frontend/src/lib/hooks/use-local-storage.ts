@@ -39,7 +39,10 @@ const useLocalStorage = <T>(key: LocalStorageKey, defaultValue: T) => {
       }
     } catch (e) {
       const error = getErrorMessage(e);
-      console.warn("Nothing found in localStorage, defaultValue will be used. Error:", error);
+      console.warn(
+        "Nothing found in localStorage, defaultValue will be used. Error:",
+        error,
+      );
 
       localStorage.setItem(key, JSON.stringify(defaultValue));
       return defaultValue;

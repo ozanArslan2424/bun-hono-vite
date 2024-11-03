@@ -8,12 +8,22 @@ export function cn(...inputs: ClassValue[]) {
 
 export const textTransform = {
   toTitleCase: (str: string) =>
-    str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()),
+    str.replace(
+      /\w\S*/g,
+      (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(),
+    ),
   toSentenceCase: (str: string) => str.charAt(0).toUpperCase() + str.slice(1),
-  toPascalCase: (str: string) => str.replace(/(\w)(\w*)/g, (_, g1, g2) => g1.toUpperCase() + g2.toLowerCase()),
-  toSnakeCase: (str: string) => str.replace(/([a-z])([A-Z])/g, "$1_$2").toLowerCase(),
-  toCamelCase: (str: string) => str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase()),
-  toKebabCase: (str: string) => str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase(),
+  toPascalCase: (str: string) =>
+    str.replace(
+      /(\w)(\w*)/g,
+      (_, g1, g2) => g1.toUpperCase() + g2.toLowerCase(),
+    ),
+  toSnakeCase: (str: string) =>
+    str.replace(/([a-z])([A-Z])/g, "$1_$2").toLowerCase(),
+  toCamelCase: (str: string) =>
+    str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase()),
+  toKebabCase: (str: string) =>
+    str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase(),
   toAllCaps: (str: string) => str.toUpperCase(),
   capitalize: (str: string) => str.charAt(0).toUpperCase() + str.slice(1),
   removeSpaces: (str: string) => str.replace(/\s/g, ""),

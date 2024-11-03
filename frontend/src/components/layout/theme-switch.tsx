@@ -23,7 +23,11 @@ function ThemeSwitch() {
 
   return (
     <Button variant="outline" size="icon" onClick={toggleTheme}>
-      {resolvedTheme === "dark" ? <SunIcon size={iconSizes.md} /> : <MoonIcon size={iconSizes.md} />}
+      {resolvedTheme === "dark" ? (
+        <SunIcon size={iconSizes.md} />
+      ) : (
+        <MoonIcon size={iconSizes.md} />
+      )}
     </Button>
   );
 }

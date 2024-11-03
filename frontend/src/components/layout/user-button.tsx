@@ -24,7 +24,7 @@ export function UserButton() {
         <DropdownMenuLabel>Username</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {userLinks.map((link) => (
-          <DropdownMenuLink key={link.href} to={link.href}>
+          <DropdownMenuLink key={link.href} href={link.href}>
             {link.label}
           </DropdownMenuLink>
         ))}
