@@ -11,26 +11,22 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as UserImport } from './routes/user'
 import { Route as TosImport } from './routes/tos'
-import { Route as SettingsImport } from './routes/settings'
+import { Route as RegisterImport } from './routes/register'
+import { Route as LoginImport } from './routes/login'
 import { Route as ContactImport } from './routes/contact'
-import { Route as AuthImport } from './routes/auth'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as PasswordResetImport } from './routes/password.reset'
 import { Route as PasswordForgotImport } from './routes/password.forgot'
 import { Route as EmailVerifyImport } from './routes/email.verify'
+import { Route as ProtectedSettingsImport } from './routes/_protected/settings'
+import { Route as ProtectedProfileImport } from './routes/_protected/profile'
 import { Route as ProtectedDashboardImport } from './routes/_protected/dashboard'
+import { Route as ProtectedUserUserIdImport } from './routes/_protected/user.$userId'
 import { Route as ProtectedBooksBookIdImport } from './routes/_protected/books.$bookId'
 
 // Create/Update Routes
-
-const UserRoute = UserImport.update({
-  id: '/user',
-  path: '/user',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const TosRoute = TosImport.update({
   id: '/tos',
@@ -38,21 +34,21 @@ const TosRoute = TosImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const SettingsRoute = SettingsImport.update({
-  id: '/settings',
-  path: '/settings',
+const RegisterRoute = RegisterImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoginRoute = LoginImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRoute,
 } as any)
 
 const ContactRoute = ContactImport.update({
   id: '/contact',
   path: '/contact',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AuthRoute = AuthImport.update({
-  id: '/auth',
-  path: '/auth',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -86,9 +82,27 @@ const EmailVerifyRoute = EmailVerifyImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ProtectedSettingsRoute = ProtectedSettingsImport.update({
+  id: '/_protected/settings',
+  path: '/settings',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProtectedProfileRoute = ProtectedProfileImport.update({
+  id: '/_protected/profile',
+  path: '/profile',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ProtectedDashboardRoute = ProtectedDashboardImport.update({
   id: '/_protected/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProtectedUserUserIdRoute = ProtectedUserUserIdImport.update({
+  id: '/_protected/user/$userId',
+  path: '/user/$userId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -116,13 +130,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthImport
-      parentRoute: typeof rootRoute
-    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -130,11 +137,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactImport
       parentRoute: typeof rootRoute
     }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
     '/tos': {
@@ -144,18 +158,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TosImport
       parentRoute: typeof rootRoute
     }
-    '/user': {
-      id: '/user'
-      path: '/user'
-      fullPath: '/user'
-      preLoaderRoute: typeof UserImport
-      parentRoute: typeof rootRoute
-    }
     '/_protected/dashboard': {
       id: '/_protected/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof ProtectedDashboardImport
+      parentRoute: typeof rootRoute
+    }
+    '/_protected/profile': {
+      id: '/_protected/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProtectedProfileImport
+      parentRoute: typeof rootRoute
+    }
+    '/_protected/settings': {
+      id: '/_protected/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof ProtectedSettingsImport
       parentRoute: typeof rootRoute
     }
     '/email/verify': {
@@ -186,6 +207,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedBooksBookIdImport
       parentRoute: typeof rootRoute
     }
+    '/_protected/user/$userId': {
+      id: '/_protected/user/$userId'
+      path: '/user/$userId'
+      fullPath: '/user/$userId'
+      preLoaderRoute: typeof ProtectedUserUserIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -194,47 +222,53 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/settings': typeof SettingsRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
   '/tos': typeof TosRoute
-  '/user': typeof UserRoute
   '/dashboard': typeof ProtectedDashboardRoute
+  '/profile': typeof ProtectedProfileRoute
+  '/settings': typeof ProtectedSettingsRoute
   '/email/verify': typeof EmailVerifyRoute
   '/password/forgot': typeof PasswordForgotRoute
   '/password/reset': typeof PasswordResetRoute
   '/books/$bookId': typeof ProtectedBooksBookIdRoute
+  '/user/$userId': typeof ProtectedUserUserIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/settings': typeof SettingsRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
   '/tos': typeof TosRoute
-  '/user': typeof UserRoute
   '/dashboard': typeof ProtectedDashboardRoute
+  '/profile': typeof ProtectedProfileRoute
+  '/settings': typeof ProtectedSettingsRoute
   '/email/verify': typeof EmailVerifyRoute
   '/password/forgot': typeof PasswordForgotRoute
   '/password/reset': typeof PasswordResetRoute
   '/books/$bookId': typeof ProtectedBooksBookIdRoute
+  '/user/$userId': typeof ProtectedUserUserIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/settings': typeof SettingsRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
   '/tos': typeof TosRoute
-  '/user': typeof UserRoute
   '/_protected/dashboard': typeof ProtectedDashboardRoute
+  '/_protected/profile': typeof ProtectedProfileRoute
+  '/_protected/settings': typeof ProtectedSettingsRoute
   '/email/verify': typeof EmailVerifyRoute
   '/password/forgot': typeof PasswordForgotRoute
   '/password/reset': typeof PasswordResetRoute
   '/_protected/books/$bookId': typeof ProtectedBooksBookIdRoute
+  '/_protected/user/$userId': typeof ProtectedUserUserIdRoute
 }
 
 export interface FileRouteTypes {
@@ -242,75 +276,85 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
-    | '/auth'
     | '/contact'
-    | '/settings'
+    | '/login'
+    | '/register'
     | '/tos'
-    | '/user'
     | '/dashboard'
+    | '/profile'
+    | '/settings'
     | '/email/verify'
     | '/password/forgot'
     | '/password/reset'
     | '/books/$bookId'
+    | '/user/$userId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/auth'
     | '/contact'
-    | '/settings'
+    | '/login'
+    | '/register'
     | '/tos'
-    | '/user'
     | '/dashboard'
+    | '/profile'
+    | '/settings'
     | '/email/verify'
     | '/password/forgot'
     | '/password/reset'
     | '/books/$bookId'
+    | '/user/$userId'
   id:
     | '__root__'
     | '/'
     | '/about'
-    | '/auth'
     | '/contact'
-    | '/settings'
+    | '/login'
+    | '/register'
     | '/tos'
-    | '/user'
     | '/_protected/dashboard'
+    | '/_protected/profile'
+    | '/_protected/settings'
     | '/email/verify'
     | '/password/forgot'
     | '/password/reset'
     | '/_protected/books/$bookId'
+    | '/_protected/user/$userId'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
-  SettingsRoute: typeof SettingsRoute
+  LoginRoute: typeof LoginRoute
+  RegisterRoute: typeof RegisterRoute
   TosRoute: typeof TosRoute
-  UserRoute: typeof UserRoute
   ProtectedDashboardRoute: typeof ProtectedDashboardRoute
+  ProtectedProfileRoute: typeof ProtectedProfileRoute
+  ProtectedSettingsRoute: typeof ProtectedSettingsRoute
   EmailVerifyRoute: typeof EmailVerifyRoute
   PasswordForgotRoute: typeof PasswordForgotRoute
   PasswordResetRoute: typeof PasswordResetRoute
   ProtectedBooksBookIdRoute: typeof ProtectedBooksBookIdRoute
+  ProtectedUserUserIdRoute: typeof ProtectedUserUserIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
-  SettingsRoute: SettingsRoute,
+  LoginRoute: LoginRoute,
+  RegisterRoute: RegisterRoute,
   TosRoute: TosRoute,
-  UserRoute: UserRoute,
   ProtectedDashboardRoute: ProtectedDashboardRoute,
+  ProtectedProfileRoute: ProtectedProfileRoute,
+  ProtectedSettingsRoute: ProtectedSettingsRoute,
   EmailVerifyRoute: EmailVerifyRoute,
   PasswordForgotRoute: PasswordForgotRoute,
   PasswordResetRoute: PasswordResetRoute,
   ProtectedBooksBookIdRoute: ProtectedBooksBookIdRoute,
+  ProtectedUserUserIdRoute: ProtectedUserUserIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -325,16 +369,18 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
-        "/auth",
         "/contact",
-        "/settings",
+        "/login",
+        "/register",
         "/tos",
-        "/user",
         "/_protected/dashboard",
+        "/_protected/profile",
+        "/_protected/settings",
         "/email/verify",
         "/password/forgot",
         "/password/reset",
-        "/_protected/books/$bookId"
+        "/_protected/books/$bookId",
+        "/_protected/user/$userId"
       ]
     },
     "/": {
@@ -343,23 +389,26 @@ export const routeTree = rootRoute
     "/about": {
       "filePath": "about.tsx"
     },
-    "/auth": {
-      "filePath": "auth.tsx"
-    },
     "/contact": {
       "filePath": "contact.tsx"
     },
-    "/settings": {
-      "filePath": "settings.tsx"
+    "/login": {
+      "filePath": "login.tsx"
+    },
+    "/register": {
+      "filePath": "register.tsx"
     },
     "/tos": {
       "filePath": "tos.tsx"
     },
-    "/user": {
-      "filePath": "user.tsx"
-    },
     "/_protected/dashboard": {
       "filePath": "_protected/dashboard.tsx"
+    },
+    "/_protected/profile": {
+      "filePath": "_protected/profile.tsx"
+    },
+    "/_protected/settings": {
+      "filePath": "_protected/settings.tsx"
     },
     "/email/verify": {
       "filePath": "email.verify.tsx"
@@ -372,6 +421,9 @@ export const routeTree = rootRoute
     },
     "/_protected/books/$bookId": {
       "filePath": "_protected/books.$bookId.tsx"
+    },
+    "/_protected/user/$userId": {
+      "filePath": "_protected/user.$userId.tsx"
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/elements/button";
 import { cn } from "@/lib/utils";
 import { EyeClosedIcon, EyeIcon } from "lucide-react";
 import * as React from "react";
@@ -62,9 +62,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
             "placeholder:text-muted-foreground",
             "focus-visible:border-primary focus-visible:outline-none",
             "disabled:cursor-not-allowed disabled:opacity-50",
+            "file:border-primary/20 file:text-foreground file:my-1 file:cursor-pointer file:rounded-md file:border file:bg-transparent file:px-3 file:py-1 file:text-sm file:font-medium",
+            type === "file" && "h-14 py-2 text-sm",
             errors && "border-danger/80 focus-visible:border-warning/60",
-            type === "file" &&
-              "file:text-foreground active:bg-background active:text-foreground cursor-pointer file:cursor-pointer file:border-0 file:bg-transparent file:text-sm file:font-medium",
             props.readOnly && "border-muted text-muted-foreground cursor-not-allowed",
             className
           )}

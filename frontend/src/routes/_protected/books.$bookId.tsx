@@ -1,4 +1,4 @@
-import BookSidemenu from "@/components/books/sidemenu";
+import BookSidemenu from "@/components/app/sidemenu";
 import { useBook } from "@/lib/api/get";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -22,7 +22,7 @@ function RouteComponent() {
         ) : (
           <div>
             <h1>{data.book.title}</h1>
-            <p>{data.book.created_at}</p>
+            <p>{data.book.createdAt}</p>
           </div>
         )}
       </div>

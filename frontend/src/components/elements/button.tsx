@@ -67,11 +67,12 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
     pending?: boolean;
   };
 
-export function Button(props: ButtonProps) {
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const { variant = "default", size = "default", className, pending = false, children, ...rest } = props;
   return (
     <button
       {...rest}
+      ref={ref}
       className={cn(
         buttonStyles.defaults,
         buttonStyles.focus,
@@ -85,4 +86,6 @@ export function Button(props: ButtonProps) {
       {pending && <LoaderIcon className="animate-spin" size={16} />} {children}
     </button>
   );
-}
+});
+
+Button.displayName = "Button";

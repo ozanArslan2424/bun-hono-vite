@@ -1,4 +1,4 @@
-import { SelectBook } from "@shared/schemas/notes";
+import { SelectBook } from "@shared/types";
 import { useQuery } from "@tanstack/react-query";
 import { api, KEYS } from ".";
 
@@ -13,6 +13,7 @@ export function useAllBooks() {
       }
 
       const data = await res.json();
+
       return data;
     },
     refetchOnWindowFocus: false,

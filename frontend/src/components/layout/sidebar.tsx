@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/elements/button";
 import Link from "@/components/ui/link";
 import { appInfo, iconSizes } from "@/lib/config";
 import { useIsMobile } from "@/lib/hooks/use-mobile";

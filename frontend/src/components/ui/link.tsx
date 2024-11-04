@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { createLink, LinkComponent } from "@tanstack/react-router";
 import React from "react";
-import { ButtonStyleProps, buttonStyles } from "./button";
+import { ButtonStyleProps, buttonStyles } from "../elements/button";
 
 export type BasicLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
   ButtonStyleProps & {

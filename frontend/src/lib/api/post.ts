@@ -1,4 +1,4 @@
-import { InsertBook } from "@shared/schemas/notes";
+import { InsertBook } from "@shared/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api, KEYS } from ".";
 

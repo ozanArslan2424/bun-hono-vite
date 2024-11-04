@@ -7,7 +7,7 @@
     "dev": "bunx --bun vite",
     "build": "bunx --bun vite build",
     "format": "prettier --write .",
-    "lint": "prettier --check .",
+    "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {

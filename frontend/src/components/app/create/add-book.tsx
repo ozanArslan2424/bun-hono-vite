@@ -1,5 +1,5 @@
-import { Input } from "@/components/forms/input";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/elements/button";
+import { Input } from "@/components/elements/input";
 import { Callout } from "@/components/ui/callout";
 import {
   Dialog,
@@ -12,18 +12,19 @@ import {
 } from "@/components/ui/dialog";
 import { useCreateBook } from "@/lib/api/post";
 import { useForm } from "@/lib/hooks/use-form";
-import { InsertBook, insertBookSchema } from "@shared/schemas/notes";
+import { InsertBook } from "@shared/types";
+import { insertBookSchema } from "@shared/zod.schema";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 
-export function AddBookItem() {
+export function AddBookListItem() {
   const [isOpen, setIsOpen] = useState(false);
 
   const { mutate } = useCreateBook();
 
   const { safeSubmit, errors, field, isPending } = useForm<InsertBook>(insertBookSchema, {
     fields: {
-      user_id: { type: "hidden", value: crypto.randomUUID(), readOnly: true },
+      userId: { type: "hidden", value: crypto.randomUUID(), readOnly: true },
       title: { type: "text", label: "Book Title" },
     },
     afterSubmitSuccess: () => {
@@ -46,11 +47,11 @@ export function AddBookItem() {
         </DialogHeader>
         <form onSubmit={(e) => safeSubmit(e, mutate)} className="space-y-4">
           <Callout variant="error" className="text-sm">
-            {errors.user_id || errors._root}
+            {errors.userId || errors._root}
           </Callout>
 
           <Input {...field("title")} />
-          <input {...field("user_id")} />
+          <input {...field("userId")} />
 
           <div className="flex w-full justify-end gap-2 pt-2">
             <DialogClose asChild>

@@ -1,14 +1,13 @@
 import Link from "@/components/ui/link";
 import { cn } from "@/lib/utils";
-import { SelectBook } from "@shared/schemas/notes";
+import { SelectBookWithNotes } from "@shared/types";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronRightIcon } from "lucide-react";
+import { ChevronRightIcon, DotIcon } from "lucide-react";
 import { useState } from "react";
 import { AddNoteListItem } from "./create/add-note";
-import { NoteListItem } from "./note-li";
 
-export function BookListItem({ book, currentlyOpen }: { book: SelectBook; currentlyOpen: boolean }) {
-  let [isOpen, setIsOpen] = useState(currentlyOpen);
+export function BookListItem({ book, currentlyOpen }: { book: SelectBookWithNotes; currentlyOpen: boolean }) {
+  const [isOpen, setIsOpen] = useState(currentlyOpen);
 
   return (
     <li key={book.id} className="pb-3 last:pb-0">
@@ -48,7 +47,12 @@ export function BookListItem({ book, currentlyOpen }: { book: SelectBook; curren
             transition={{ type: "tween", bounce: 0, duration: 0.4 }}
           >
             {book.notes.map((note) => (
-              <NoteListItem note={note} key={note.id} />
+              <li key={note.title}>
+                <span className="flex items-center gap-1.5 px-2 py-1">
+                  <DotIcon className="text-muted-foreground size-4" />
+                  <span className="cursor-pointer text-sm hover:underline">{note.title}</span>
+                </span>
+              </li>
             ))}
 
             <li>

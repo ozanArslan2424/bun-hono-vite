@@ -6,9 +6,9 @@ type EmailProps = {
   verificationToken: string;
 };
 
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
-const emailFrom = process.env.NEXT_PUBLIC_EMAIL_FROM;
-const emailPassword = process.env.NEXT_PUBLIC_EMAIL_PASSWORD;
+const baseURL = process.env.BASE_URL;
+const emailFrom = process.env.EMAIL_FROM;
+const emailPassword = process.env.EMAIL_PASSWORD;
 
 const transporter = nodemailer.createTransport({
   service: "gmail",

@@ -8,11 +8,3 @@ export function AddNoteListItem({ bookId }: { bookId: string }) {
     </button>
   );
 }
-
-export function AddSubNoteListItem({ noteId }: { noteId: string }) {
-  return (
-    <button className="hover:text-foreground text-muted-foreground/70 transition-colors">
-      <PlusIcon className="size-4" />
-    </button>
-  );
-}

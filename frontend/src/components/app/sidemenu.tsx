@@ -1,7 +1,7 @@
 import { useAllBooks } from "@/lib/api/get";
 import { LoaderIcon } from "lucide-react";
 import { BookListItem } from "./book-li";
-import { AddBookItem } from "./create/add-book";
+import { AddBookListItem } from "./create/add-book";
 
 export default function BookSidemenu({ currentBookId }: { currentBookId: string }) {
   const { isPending, error, data } = useAllBooks();
@@ -22,12 +22,12 @@ export default function BookSidemenu({ currentBookId }: { currentBookId: string 
         ) : (
           <ol>
             {data.books
-              .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+              .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
               .map((book) => (
                 <BookListItem key={book.id} book={book} currentlyOpen={currentBookId === book.id} />
               ))}
             <li>
-              <AddBookItem />
+              <AddBookListItem />
             </li>
           </ol>
         )}

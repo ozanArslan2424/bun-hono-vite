@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/elements/button";
 import { iconSizes } from "@/lib/config";
 import { LoaderIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";

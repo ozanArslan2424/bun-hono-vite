@@ -6,4 +6,5 @@ export const api = hc<ApiRoutes>("/").api;
 export const KEYS = {
   ALL_BOOKS: "allBooks",
   BOOK: "book",
+  USER: "user",
 };

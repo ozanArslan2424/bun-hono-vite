@@ -1,10 +1,12 @@
-import { InputProps } from "@/components/forms/input";
-import { ButtonHTMLAttributes, useState } from "react";
+import { InputProps } from "@/components/elements/input";
+import { useState } from "react";
 import { SafeParseReturnType, ZodTypeAny } from "zod";
+import { getErrorMessage } from "../utils";
 
 type UseFormOptions<T> = {
   fields?: { [key in keyof T]?: Omit<InputProps, "id" | "name" | "errors"> };
   afterSubmitSuccess?: () => void | Promise<void>;
+  afterSubmitError?: () => void | Promise<void>;
 };
 
 export function useForm<T>(schema: ZodTypeAny, options?: UseFormOptions<T>) {
@@ -12,36 +14,30 @@ export function useForm<T>(schema: ZodTypeAny, options?: UseFormOptions<T>) {
   type ParseResult = SafeParseReturnType<T, T>;
 
   const [errors, setErrors] = useState<Errors>({});
-  const [isPending, setIsPending] = useState<boolean>(false);
 
-  function safeSubmit(
-    e: React.FormEvent<HTMLFormElement>,
-    onSuccess: (safeParseData: T) => void | Promise<void>,
-    onFail?: (errors: Errors) => void | Promise<void>
-  ) {
+  function safeSubmit(e: React.FormEvent<HTMLFormElement>, onSuccess: (safeParseData: T) => void | Promise<void>) {
     e.preventDefault();
     e.stopPropagation();
-
-    if (isPending) return;
+    setErrors({});
 
     try {
-      setIsPending(true);
-      setErrors({});
-
       const formData = new FormData(e.currentTarget);
-      const values = Object.fromEntries(formData);
+      const values = fixFiles(formData);
       const parseResult: ParseResult = schema.safeParse(values);
 
       if (parseResult.error) {
         const errors = parseResult.error.flatten().fieldErrors as Errors;
         setErrors(errors);
-        onFail?.(errors);
+        options?.afterSubmitError?.();
         return;
       }
 
       onSuccess(parseResult.data);
+    } catch (error) {
+      const message = getErrorMessage(error);
+      setRootError(message);
+      options?.afterSubmitError?.();
     } finally {
-      setIsPending(false);
       options?.afterSubmitSuccess?.();
     }
   }
@@ -52,16 +48,10 @@ export function useForm<T>(schema: ZodTypeAny, options?: UseFormOptions<T>) {
       name: String(name),
       errors: errors[name],
     };
-
     if (options && options.fields && options.fields[name]) {
       return { ...defaults, ...options.fields[name] };
     }
-
     return defaults;
-  }
-
-  function button(type: ButtonHTMLAttributes<HTMLButtonElement>["type"] = "submit") {
-    return { type, isPending };
   }
 
   function setFieldErrors(errors: Errors) {
@@ -72,5 +62,24 @@ export function useForm<T>(schema: ZodTypeAny, options?: UseFormOptions<T>) {
     setErrors((prev) => ({ ...prev, _root: [message] }));
   }
 
-  return { errors, isPending, safeSubmit, field, button, setFieldErrors, setRootError };
+  return { errors, safeSubmit, field, setFieldErrors, setRootError };
+}
+
+function fixFiles(formData: FormData) {
+  const values = Object.fromEntries(formData);
+  const fixedValues = Object.fromEntries(
+    Object.entries(values).map(([key, value]) => {
+      if (value instanceof File) {
+        if (value.size === 0 || value.name === "") {
+          return [key, undefined];
+        } else {
+          return [key, value];
+        }
+      } else {
+        return [key, value];
+      }
+    })
+  );
+
+  return fixedValues;
 }

@@ -3,8 +3,7 @@ import { Check, ChevronRight, Circle } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { Link } from "@tanstack/react-router";
-import { Button, ButtonProps } from "./button";
+import { Button, ButtonProps } from "../elements/button";
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 
@@ -150,7 +149,7 @@ const DropdownMenuSeparator = React.forwardRef<
 ));
 
 const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
-  return <span className={cn("ml-auto text-xs tracking-widest opacity-60", className)} {...props} />;
+  return <span className={cn("ml-auto text-xs tracking-widest", className)} {...props} />;
 };
 
 const DropdownMenuButton = (props: ButtonProps) => {
@@ -168,16 +167,6 @@ const DropdownMenuButton = (props: ButtonProps) => {
   );
 };
 
-type DropdownMenuLinkProps = React.ComponentProps<typeof Link> & React.ComponentProps<typeof DropdownMenuButton>;
-
-const DropdownMenuLink = (props: DropdownMenuLinkProps) => {
-  return (
-    <Link to={props.to}>
-      <DropdownMenuButton {...props} />
-    </Link>
-  );
-};
-
 DropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayName;
 DropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayName;
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
@@ -188,7 +177,6 @@ DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName;
 DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;
 DropdownMenuShortcut.displayName = "DropdownMenuShortcut";
 DropdownMenuButton.displayName = "DropdownMenuButton";
-DropdownMenuLink.displayName = "DropdownMenuLink";
 
 export {
   DropdownMenu,
@@ -198,7 +186,6 @@ export {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuLink,
   DropdownMenuPortal,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
