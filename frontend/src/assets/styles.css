@@ -4,6 +4,41 @@
 
 @layer base {
   :root {
+    --white: 0 0% 97%;
+    --black: 240 5.9% 10%;
+
+    --background: 240 10% 8%;
+    --foreground: var(--white);
+
+    --primary: 207 24% 90%;
+    --secondary: 0 0% 9%;
+    --accent: 240 3.7% 15.9%;
+    --muted: 240 3.7% 15.9%;
+    --danger: 9 76% 40%;
+    --warning: 40 100% 55%;
+    --success: 119 50% 40%;
+
+    --border: var(--muted);
+    --ring: 232 40% 30%;
+
+    --primary-foreground: var(--black);
+    --secondary-foreground: var(--white);
+    --muted-foreground: 240 5% 64.9%;
+    --accent-foreground: var(--white);
+    --danger-foreground: var(--white);
+    --warning-foreground: var(--black);
+    --success-foreground: var(--white);
+
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --primary: 240 5.9% 10%;
@@ -14,40 +49,16 @@
     --muted-foreground: 240 3.8% 46.1%;
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --danger: 0 84.2% 60.2%;
+    --danger-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
-    --radius: 0.5rem;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-  }
-
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
   }
 }
 
@@ -72,22 +83,26 @@
   }
 }
 
-@layer components {
-  .label-text {
-    @apply font-semibold;
-  }
-
-  .description-text {
-    @apply text-neutral-500;
-  }
-
-  .error-text {
-    @apply text-red-500;
-  }
-}
-
 @layer utilities {
   .grainy {
     background: url(https://grainy-gradients.vercel.app/noise.svg);
+  }
+
+  .calm-gradient {
+    background: linear-gradient(90deg, #1e293b50, #33415550, #47556950, #64748b50);
+    background-size: 200% 200%;
+    animation: calmGradientAnimation 10s ease infinite;
+  }
+
+  @keyframes calmGradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 }

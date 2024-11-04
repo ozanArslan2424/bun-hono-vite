@@ -15,7 +15,7 @@ export function Checkbox({ label, errors, ...rest }: CheckboxProps) {
           type="button"
           className={cn(
             "aspect-square h-3 w-3 rounded-sm outline-none ring-1 ring-offset-2 transition duration-100 focus-visible:ring-2",
-            checked && "bg-primary",
+            checked && "bg-primary"
           )}
           role="checkbox"
           aria-checked={checked}
@@ -25,11 +25,7 @@ export function Checkbox({ label, errors, ...rest }: CheckboxProps) {
         <input {...rest} type="checkbox" className="hidden" checked={checked} />
         {label && <span className="label-text">{label}</span>}
 
-        {errors && errors.length > 0 && (
-          <span className="error-text">
-            {errors.map((error) => error + " ")}
-          </span>
-        )}
+        {errors && errors.length > 0 && <span className="error-text">{errors.map((error) => error + " ")}</span>}
       </div>
     </label>
   );

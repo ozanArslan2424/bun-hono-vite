@@ -6,13 +6,7 @@ type ProProps = {
   value: number;
 } & React.ComponentProps<"progress">;
 
-const Progress = ({
-  total,
-  value,
-  children,
-  className,
-  ...props
-}: ProProps) => {
+const Progress = ({ total, value, children, className, ...props }: ProProps) => {
   return (
     <progress
       value={value}
@@ -22,7 +16,7 @@ const Progress = ({
         "[&::-webkit-progress-bar]:rounded-lg [&::-webkit-progress-value]:rounded-lg",
         "[&::-moz-progress-bar]:bg-muted [&::-webkit-progress-bar]:bg-muted",
         "[&::-webkit-progress-value]:bg-muted-foreground",
-        className,
+        className
       )}
       {...props}
     >

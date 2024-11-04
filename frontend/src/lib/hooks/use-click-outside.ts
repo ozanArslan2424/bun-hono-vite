@@ -1,11 +1,7 @@
 import { useEffect } from "react";
 
 // Click outside to close
-export const useClickOutside = (
-  closestItemSelector: string,
-  condition: boolean,
-  callback: () => void,
-) => {
+export const useClickOutside = (closestItemSelector: string, condition: boolean, callback: () => void) => {
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       e.preventDefault();

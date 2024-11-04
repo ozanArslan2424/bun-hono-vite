@@ -19,9 +19,7 @@ type RadioContextType = {
   error?: string[];
   name: React.InputHTMLAttributes<HTMLInputElement>["name"];
   selectedValue: React.InputHTMLAttributes<HTMLInputElement>["value"];
-  setSelectedValue: React.Dispatch<
-    React.SetStateAction<React.InputHTMLAttributes<HTMLInputElement>["value"]>
-  >;
+  setSelectedValue: React.Dispatch<React.SetStateAction<React.InputHTMLAttributes<HTMLInputElement>["value"]>>;
 } | null;
 
 const RadioContext = createContext<RadioContextType>(null);
@@ -48,17 +46,10 @@ export function RadioGroup(props: RadioGroup) {
 
 export function RadioOption(props: RadioOption) {
   const context = useContext(RadioContext);
-  if (!context)
-    throw new Error("RadioOption can only be used inside a RadioGroup!!!");
+  if (!context) throw new Error("RadioOption can only be used inside a RadioGroup!!!");
 
-  const defaultChecked = useMemo(
-    () => context.defaultValue === props.value,
-    [context.defaultValue, props.value],
-  );
-  const checked = useMemo(
-    () => context.selectedValue === props.value,
-    [context.selectedValue, props.value],
-  );
+  const defaultChecked = useMemo(() => context.defaultValue === props.value, [context.defaultValue, props.value]);
+  const checked = useMemo(() => context.selectedValue === props.value, [context.selectedValue, props.value]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (!context) return;
@@ -70,16 +61,13 @@ export function RadioOption(props: RadioOption) {
   return (
     <label
       className={cn(
-        checked
-          ? "bg-accent text-accent-foreground"
-          : "bg-background text-foreground",
+        checked ? "bg-accent text-accent-foreground" : "bg-background text-foreground",
         "border-input flex h-10 w-full cursor-pointer items-center justify-center border px-3 py-2 font-semibold transition first:rounded-l-md last:rounded-r-md",
         "focus-within:border-primary focus-within:outline-none",
         "focus-visible:border-primary focus-visible:outline-none",
-        context.error &&
-          "border-destructive peer-focus-visible:border-amber-500",
+        context.error && "border-danger peer-focus-visible:border-amber-500",
         props.disabled && "cursor-not-allowed opacity-50",
-        props.className,
+        props.className
       )}
       htmlFor={props.id}
     >

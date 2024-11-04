@@ -8,22 +8,12 @@ export function cn(...inputs: ClassValue[]) {
 
 export const textTransform = {
   toTitleCase: (str: string) =>
-    str.replace(
-      /\w\S*/g,
-      (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(),
-    ),
+    str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()),
   toSentenceCase: (str: string) => str.charAt(0).toUpperCase() + str.slice(1),
-  toPascalCase: (str: string) =>
-    str.replace(
-      /(\w)(\w*)/g,
-      (_, g1, g2) => g1.toUpperCase() + g2.toLowerCase(),
-    ),
-  toSnakeCase: (str: string) =>
-    str.replace(/([a-z])([A-Z])/g, "$1_$2").toLowerCase(),
-  toCamelCase: (str: string) =>
-    str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase()),
-  toKebabCase: (str: string) =>
-    str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase(),
+  toPascalCase: (str: string) => str.replace(/(\w)(\w*)/g, (_, g1, g2) => g1.toUpperCase() + g2.toLowerCase()),
+  toSnakeCase: (str: string) => str.replace(/([a-z])([A-Z])/g, "$1_$2").toLowerCase(),
+  toCamelCase: (str: string) => str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase()),
+  toKebabCase: (str: string) => str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase(),
   toAllCaps: (str: string) => str.toUpperCase(),
   capitalize: (str: string) => str.charAt(0).toUpperCase() + str.slice(1),
   removeSpaces: (str: string) => str.replace(/\s/g, ""),
@@ -39,41 +29,30 @@ export const textTransform = {
 };
 
 export const timestamp = {
-  create: () => new Date().toISOString(),
-  toTime: (date: string) => new Date(date).getTime(),
-  toLocaleString: (date: string) => new Date(date).toLocaleString(),
-  toLocaleTimeString: (date: string) => new Date(date).toLocaleTimeString(),
-  toLocaleDateString: (date: string) => {
-    return new Date(date).toLocaleDateString("en-US", {
+  // convert a date string to a Date object return example: "Wed Sep 01 2021 00:00:00 GMT+0000 (Coordinated Universal Time)"
+  toDate: (date: string) => new Date(date),
+  // convert a date string to an ISO string return example: "2021-09-01T00:00:00.000Z"
+  toISO: (date: string) => new Date(date).toISOString(),
+  // convert a date string to a human-readable string returns example: "Sep 1, 2021"
+  toReadable: (date: string) =>
+    new Date(date).toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
       day: "numeric",
-    });
-  },
-  extractDateAndTime: (date: string, hourFormat: "12" | "24" = "24") => {
-    const [datestamp, timestamp] = date.split("T");
-    const [hour, minute] = timestamp.split(":");
-    const dateObj = new Date(datestamp);
-
-    function getHourString(hour: string) {
-      if (hourFormat === "24") return hour;
-
-      const hourInt = parseInt(hour);
-
-      switch (true) {
-        case hourInt === 0:
-          return "12";
-        case hourInt > 12:
-          return String(hourInt - 12);
-        default:
-          return hour;
-      }
-    }
-
-    const time = `${getHourString(hour)}:${minute}`;
-
-    return { date: dateObj, time };
-  },
+    }),
+  // convert a date string to milliseconds return example: 1630454400000
+  toTime: (date: string) => new Date(date).getTime(),
+  // get the current date as a Date return example: "Wed Sep 01 2021 00:00:00 GMT+0000 (Coordinated Universal Time)"
+  newDate: () => new Date(),
+  // get the current date as an ISO string return example: "2021-09-01T00:00:00.000Z"
+  newISO: () => new Date().toISOString(),
+  // get the current date as a human-readable string returns example: "Sep 1, 2021"
+  newReadable: () =>
+    new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }),
 };
 
 export function sleep(ms: number) {

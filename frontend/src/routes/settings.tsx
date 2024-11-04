@@ -13,7 +13,7 @@ function RouteComponent() {
     <>
       <div className="grid gap-4 p-6 md:grid-cols-[20%_60%_20%]">
         <div>
-          <Link href="/dashboard" asButton variant="outline" className="flex-nowrap">
+          <Link to="/dashboard" asButton variant="outline" className="flex-nowrap">
             <ArrowLeftIcon size={16} />
             <span>Back</span>
           </Link>

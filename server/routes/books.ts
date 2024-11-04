@@ -7,6 +7,16 @@ export const booksRoute = new Hono()
   .get("/", async (c) => {
     return c.json({ books: fakeBooks });
   })
+  .get("/:id", async (c) => {
+    const bookId = c.req.param("id");
+    const book = fakeBooks.find((b) => b.id === bookId);
+
+    if (!book) {
+      return c.notFound();
+    }
+
+    return c.json({ book });
+  })
   .post("/", zValidator("json", insertBookSchema), async (c) => {
     const data = c.req.valid("json");
 
@@ -23,18 +33,9 @@ export const booksRoute = new Hono()
     fakeBooks.push(newBook);
 
     c.status(201);
-    return c.json({ message: "Book created" });
+    return c.json({ message: "Book created", newBook });
   })
-  .get("/:id", async (c) => {
-    const bookId = c.req.param("id");
-    const book = fakeBooks.find((b) => b.id === bookId);
 
-    if (!book) {
-      return c.notFound();
-    }
-
-    return c.json({ book });
-  })
   .delete("/:id", async (c) => {
     const bookId = c.req.param("id");
     const bookIndex = fakeBooks.findIndex((b) => b.id === bookId);

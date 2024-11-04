@@ -3,24 +3,18 @@ import { cn } from "@/lib/utils";
 import { EyeClosedIcon, EyeIcon } from "lucide-react";
 import * as React from "react";
 
-type TypeProps = Omit<React.ComponentProps<"input">["type"], "checkbox" | "radio">;
-
-type DefaultInputProps = Omit<React.ComponentProps<"input">, "type" | "name" | "id">;
-
 export type InputProps = {
   id: string;
   name: string;
+  type?: React.HTMLInputTypeAttribute;
   label?: string;
-  description?: string;
   errors?: string[];
-  type?: TypeProps;
-  passwordAutoVisible?: boolean;
-} & DefaultInputProps;
+} & Omit<React.ComponentProps<"input">, "type" | "name" | "id">;
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { type = "text", label, description, errors, passwordAutoVisible, ...rest } = props;
+  const { id, name, type = "text", label, errors, className, ...rest } = props;
 
-  const [controlledType, setControlledType] = React.useState<TypeProps>(type);
+  const [controlledType, setControlledType] = React.useState<React.HTMLInputTypeAttribute>(type);
 
   function switchTypeForPassword() {
     setControlledType((prev) => {
@@ -37,66 +31,61 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
     });
   }
 
-  React.useEffect(() => {
-    if (passwordAutoVisible) {
-      setControlledType("text");
-      setTimeout(() => {
-        setControlledType("password");
-      }, 1500);
-    }
-  }, [passwordAutoVisible]);
-
   const autoComplete = React.useMemo(() => {
-    const getAutoComplete = (type: TypeProps): React.HTMLInputAutoCompleteAttribute => {
+    const getAutoComplete = (type: React.HTMLInputTypeAttribute): React.HTMLInputAutoCompleteAttribute => {
       if (props.autoComplete) return props.autoComplete;
       if (type === "email") return "email";
       if (type === "password") return "current-password";
+      if (type === "tel") return "tel";
       return "off";
     };
     return getAutoComplete(type);
   }, [type, props.autoComplete]);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={cn("relative flex flex-col gap-1", label && "pt-2")}>
       {label && (
-        <label htmlFor={props.id} className="flex flex-col gap-1.5">
-          <span className={cn("text-sm font-semibold leading-none", errors && "text-red-500")}>{label}</span>
-          {description && <span className="text-muted-foreground text-sm font-medium leading-none">{description}</span>}
+        <label htmlFor={id} className="bg-background absolute left-1.5 top-0 px-1.5 text-xs font-medium leading-none">
+          {label}
         </label>
       )}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5">
         <input
           {...rest}
           ref={ref}
+          id={id}
+          name={name}
           type={controlledType as React.HTMLInputTypeAttribute}
+          autoComplete={autoComplete}
           className={cn(
-            "bg-backgorund text-foreground",
-            "flex h-10 w-full rounded-md border px-3 py-2 text-sm transition",
+            "bg-background text-foreground border-primary/50 flex h-10 w-full items-center rounded-md border px-3 transition",
             "placeholder:text-muted-foreground",
-            "focus-visible:border-primary/50 focus-visible:outline-none",
+            "focus-visible:border-primary focus-visible:outline-none",
             "disabled:cursor-not-allowed disabled:opacity-50",
-            errors && "border-destructive focus-visible:border-amber-500",
+            errors && "border-danger/80 focus-visible:border-warning/60",
             type === "file" &&
               "file:text-foreground active:bg-background active:text-foreground cursor-pointer file:cursor-pointer file:border-0 file:bg-transparent file:text-sm file:font-medium",
             props.readOnly && "border-muted text-muted-foreground cursor-not-allowed",
-            props.className
+            className
           )}
-          autoComplete={autoComplete}
         />
         {type === "password" && (
           <Button
             type="button"
             variant="outline"
             size="icon"
-            className="h-10 max-h-10 min-h-10 w-10 max-w-10 shrink-0"
+            className={cn("h-10 w-10", errors && "border-danger/80")}
             onClick={switchTypeForPassword}
+            aria-label="Toggle password visibility"
           >
             {controlledType === "password" ? <EyeClosedIcon className="h-4 w-4" /> : <EyeIcon className="h-4 w-4" />}
           </Button>
         )}
       </div>
       {errors && (
-        <span className="text-sm font-medium leading-none text-red-500">{errors.map((error) => error).join(" ")}</span>
+        <span className="text-danger px-0.5 text-sm font-medium leading-none">
+          {errors.map((error) => error).join(" ")}
+        </span>
       )}
     </div>
   );

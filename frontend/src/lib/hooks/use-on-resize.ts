@@ -2,7 +2,7 @@ import { MutableRefObject, useEffect, useRef } from "react";
 
 export function useOnResize(
   ref: MutableRefObject<Element | null>,
-  callback: (args: { currentHeight: number; previousHeight: number }) => void,
+  callback: (args: { currentHeight: number; previousHeight: number }) => void
 ) {
   const observer = useRef<ResizeObserver | null>(null);
   const previousHeightRef = useRef<number | null>(null);

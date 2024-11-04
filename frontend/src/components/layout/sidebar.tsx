@@ -4,10 +4,10 @@ import Link from "@/components/ui/link";
 import { appInfo, iconSizes } from "@/lib/config";
 import { useIsMobile } from "@/lib/hooks/use-mobile";
 import { cn } from "@/lib/utils";
+import { useLocation } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ChevronsLeftIcon, CircleDotIcon, CircleIcon, MenuIcon } from "lucide-react";
 import { createContext, ElementRef, useContext, useEffect, useReducer, useRef } from "react";
-import { useLocation } from "react-router-dom";
 
 type ContextValueProps = {
   isOpen: boolean;
@@ -158,7 +158,7 @@ export function SidebarLink({ to, label, icon, children }: SidebarLinkProps) {
   return (
     <li>
       <Link
-        href={to}
+        to={to}
         asButton
         variant="outline"
         size={isOpen ? "sm" : "icon"}
@@ -197,7 +197,7 @@ export function SidebarSubLink({ to, label }: SidebarSubLinkProps) {
   const { pathname } = useLocation();
   return (
     <Link
-      href={to}
+      to={to}
       asButton
       variant="outline"
       size="sm"

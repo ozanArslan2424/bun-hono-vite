@@ -17,15 +17,15 @@ export const iconSizes = {
 export const navLinks = {
   protected: [],
   public: [
-    { href: "/about", label: "About" },
-    { href: "/pricing", label: "Pricing" },
-    { href: "/contact", label: "Contact" },
+    { to: "/about", label: "About" },
+    { to: "/pricing", label: "Pricing" },
+    { to: "/contact", label: "Contact" },
   ],
 };
 
 export const userLinks = [
-  { href: "/profile", label: "Profile" },
-  { href: "/settings", label: "Settings" },
+  { to: "/profile", label: "Profile" },
+  { to: "/settings", label: "Settings" },
 ];
 
 export const publicRoutes = ["/", "/about", "/privacy", "/tos"];

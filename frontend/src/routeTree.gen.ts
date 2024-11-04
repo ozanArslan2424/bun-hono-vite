@@ -14,7 +14,6 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as UserImport } from './routes/user'
 import { Route as TosImport } from './routes/tos'
 import { Route as SettingsImport } from './routes/settings'
-import { Route as DashboardImport } from './routes/dashboard'
 import { Route as ContactImport } from './routes/contact'
 import { Route as AuthImport } from './routes/auth'
 import { Route as AboutImport } from './routes/about'
@@ -22,6 +21,8 @@ import { Route as IndexImport } from './routes/index'
 import { Route as PasswordResetImport } from './routes/password.reset'
 import { Route as PasswordForgotImport } from './routes/password.forgot'
 import { Route as EmailVerifyImport } from './routes/email.verify'
+import { Route as ProtectedDashboardImport } from './routes/_protected/dashboard'
+import { Route as ProtectedBooksBookIdImport } from './routes/_protected/books.$bookId'
 
 // Create/Update Routes
 
@@ -40,12 +41,6 @@ const TosRoute = TosImport.update({
 const SettingsRoute = SettingsImport.update({
   id: '/settings',
   path: '/settings',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const DashboardRoute = DashboardImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -91,6 +86,18 @@ const EmailVerifyRoute = EmailVerifyImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ProtectedDashboardRoute = ProtectedDashboardImport.update({
+  id: '/_protected/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProtectedBooksBookIdRoute = ProtectedBooksBookIdImport.update({
+  id: '/_protected/books/$bookId',
+  path: '/books/$bookId',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -123,13 +130,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardImport
-      parentRoute: typeof rootRoute
-    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -149,6 +149,13 @@ declare module '@tanstack/react-router' {
       path: '/user'
       fullPath: '/user'
       preLoaderRoute: typeof UserImport
+      parentRoute: typeof rootRoute
+    }
+    '/_protected/dashboard': {
+      id: '/_protected/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof ProtectedDashboardImport
       parentRoute: typeof rootRoute
     }
     '/email/verify': {
@@ -172,6 +179,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PasswordResetImport
       parentRoute: typeof rootRoute
     }
+    '/_protected/books/$bookId': {
+      id: '/_protected/books/$bookId'
+      path: '/books/$bookId'
+      fullPath: '/books/$bookId'
+      preLoaderRoute: typeof ProtectedBooksBookIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -182,13 +196,14 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/dashboard': typeof DashboardRoute
   '/settings': typeof SettingsRoute
   '/tos': typeof TosRoute
   '/user': typeof UserRoute
+  '/dashboard': typeof ProtectedDashboardRoute
   '/email/verify': typeof EmailVerifyRoute
   '/password/forgot': typeof PasswordForgotRoute
   '/password/reset': typeof PasswordResetRoute
+  '/books/$bookId': typeof ProtectedBooksBookIdRoute
 }
 
 export interface FileRoutesByTo {
@@ -196,13 +211,14 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/dashboard': typeof DashboardRoute
   '/settings': typeof SettingsRoute
   '/tos': typeof TosRoute
   '/user': typeof UserRoute
+  '/dashboard': typeof ProtectedDashboardRoute
   '/email/verify': typeof EmailVerifyRoute
   '/password/forgot': typeof PasswordForgotRoute
   '/password/reset': typeof PasswordResetRoute
+  '/books/$bookId': typeof ProtectedBooksBookIdRoute
 }
 
 export interface FileRoutesById {
@@ -211,13 +227,14 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
-  '/dashboard': typeof DashboardRoute
   '/settings': typeof SettingsRoute
   '/tos': typeof TosRoute
   '/user': typeof UserRoute
+  '/_protected/dashboard': typeof ProtectedDashboardRoute
   '/email/verify': typeof EmailVerifyRoute
   '/password/forgot': typeof PasswordForgotRoute
   '/password/reset': typeof PasswordResetRoute
+  '/_protected/books/$bookId': typeof ProtectedBooksBookIdRoute
 }
 
 export interface FileRouteTypes {
@@ -227,39 +244,42 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
-    | '/dashboard'
     | '/settings'
     | '/tos'
     | '/user'
+    | '/dashboard'
     | '/email/verify'
     | '/password/forgot'
     | '/password/reset'
+    | '/books/$bookId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/auth'
     | '/contact'
-    | '/dashboard'
     | '/settings'
     | '/tos'
     | '/user'
+    | '/dashboard'
     | '/email/verify'
     | '/password/forgot'
     | '/password/reset'
+    | '/books/$bookId'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/auth'
     | '/contact'
-    | '/dashboard'
     | '/settings'
     | '/tos'
     | '/user'
+    | '/_protected/dashboard'
     | '/email/verify'
     | '/password/forgot'
     | '/password/reset'
+    | '/_protected/books/$bookId'
   fileRoutesById: FileRoutesById
 }
 
@@ -268,13 +288,14 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
-  DashboardRoute: typeof DashboardRoute
   SettingsRoute: typeof SettingsRoute
   TosRoute: typeof TosRoute
   UserRoute: typeof UserRoute
+  ProtectedDashboardRoute: typeof ProtectedDashboardRoute
   EmailVerifyRoute: typeof EmailVerifyRoute
   PasswordForgotRoute: typeof PasswordForgotRoute
   PasswordResetRoute: typeof PasswordResetRoute
+  ProtectedBooksBookIdRoute: typeof ProtectedBooksBookIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -282,13 +303,14 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
-  DashboardRoute: DashboardRoute,
   SettingsRoute: SettingsRoute,
   TosRoute: TosRoute,
   UserRoute: UserRoute,
+  ProtectedDashboardRoute: ProtectedDashboardRoute,
   EmailVerifyRoute: EmailVerifyRoute,
   PasswordForgotRoute: PasswordForgotRoute,
   PasswordResetRoute: PasswordResetRoute,
+  ProtectedBooksBookIdRoute: ProtectedBooksBookIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -305,13 +327,14 @@ export const routeTree = rootRoute
         "/about",
         "/auth",
         "/contact",
-        "/dashboard",
         "/settings",
         "/tos",
         "/user",
+        "/_protected/dashboard",
         "/email/verify",
         "/password/forgot",
-        "/password/reset"
+        "/password/reset",
+        "/_protected/books/$bookId"
       ]
     },
     "/": {
@@ -326,9 +349,6 @@ export const routeTree = rootRoute
     "/contact": {
       "filePath": "contact.tsx"
     },
-    "/dashboard": {
-      "filePath": "dashboard.tsx"
-    },
     "/settings": {
       "filePath": "settings.tsx"
     },
@@ -338,6 +358,9 @@ export const routeTree = rootRoute
     "/user": {
       "filePath": "user.tsx"
     },
+    "/_protected/dashboard": {
+      "filePath": "_protected/dashboard.tsx"
+    },
     "/email/verify": {
       "filePath": "email.verify.tsx"
     },
@@ -346,6 +369,9 @@ export const routeTree = rootRoute
     },
     "/password/reset": {
       "filePath": "password.reset.tsx"
+    },
+    "/_protected/books/$bookId": {
+      "filePath": "_protected/books.$bookId.tsx"
     }
   }
 }

@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
-import Link from "@/components/ui/link";
 import { createFileRoute } from "@tanstack/react-router";
-import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
@@ -10,23 +8,17 @@ export const Route = createFileRoute("/")({
 function RouteComponent() {
   return (
     <div className="p-6">
-      <div className="flex flex-col gap-4">
-        <Button onClick={() => toast.success("Hello, world!")}>Click me</Button>
-
-        <Link to="/password/forgot">Test</Link>
-        <h1 className="text-4xl font-bold">Welcome to Hono!</h1>
-
-        <Link asButton href="/dashboard">
-          Dashboard
-        </Link>
-
-        <p className="text-lg">
-          Hono is a full-stack TypeScript framework for building scalable and maintainable web applications. It is built
-          on top of Express.js and React.js, and provides a set of tools and conventions to help you build your
-          application faster.
-        </p>
-        <p className="text-lg">To get started, check out the </p>
-      </div>
+      <h1>Welcome to Our Landing Page</h1>
+      <p>This is the best place to start your journey with us.</p>
+      <Button>Get Started</Button>
+      <Button variant="secondary">Get Started</Button>
+      <Button variant="accent">Get Started</Button>
+      <Button variant="danger">Get Started</Button>
+      <Button variant="ghost">Get Started</Button>
+      <Button variant="muted">Get Started</Button>
+      <Button variant="outline">Get Started</Button>
+      <Button variant="warning">Get Started</Button>
+      <Button variant="success">Get Started</Button>
     </div>
   );
 }

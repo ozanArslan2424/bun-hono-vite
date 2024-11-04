@@ -24,8 +24,8 @@ export function BreadcrumbList({ className, ...props }: BreadcrumbListProps) {
   return (
     <ol
       className={cn(
-        "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5",
-        className,
+        "text-muted-foreground flex flex-wrap items-center gap-1.5 break-words text-sm sm:gap-2.5",
+        className
       )}
       {...props}
     />
@@ -33,21 +33,11 @@ export function BreadcrumbList({ className, ...props }: BreadcrumbListProps) {
 }
 
 export function BreadcrumbItem({ className, ...props }: BreadcrumbItemProps) {
-  return (
-    <li
-      className={cn("inline-flex items-center gap-1.5", className)}
-      {...props}
-    />
-  );
+  return <li className={cn("inline-flex items-center gap-1.5", className)} {...props} />;
 }
 
 export function BreadcrumbLink({ className, ...props }: BreadcrumbLinkProps) {
-  return (
-    <Link
-      className={cn("transition-colors hover:text-foreground", className)}
-      {...props}
-    />
-  );
+  return <Link className={cn("hover:text-foreground transition-colors", className)} {...props} />;
 }
 
 export function BreadcrumbPage({ className, ...props }: BreadcrumbPageProps) {
@@ -56,33 +46,21 @@ export function BreadcrumbPage({ className, ...props }: BreadcrumbPageProps) {
       role="link"
       aria-disabled="true"
       aria-current="page"
-      className={cn("font-normal text-foreground", className)}
+      className={cn("text-foreground font-normal", className)}
       {...props}
     />
   );
 }
 
-export function BreadcrumbSeparator({
-  children,
-  className,
-  ...props
-}: BreadcrumbSeparatorProps) {
+export function BreadcrumbSeparator({ children, className, ...props }: BreadcrumbSeparatorProps) {
   return (
-    <li
-      role="presentation"
-      aria-hidden="true"
-      className={cn("[&>svg]:h-3.5 [&>svg]:w-3.5", className)}
-      {...props}
-    >
+    <li role="presentation" aria-hidden="true" className={cn("[&>svg]:h-3.5 [&>svg]:w-3.5", className)} {...props}>
       {children ?? <ChevronRight />}
     </li>
   );
 }
 
-export function BreadcrumbEllipsis({
-  className,
-  ...props
-}: BreadcrumbEllipsisProps) {
+export function BreadcrumbEllipsis({ className, ...props }: BreadcrumbEllipsisProps) {
   return (
     <span
       role="presentation"
