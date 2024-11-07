@@ -88,12 +88,16 @@
     background: url(https://grainy-gradients.vercel.app/noise.svg);
   }
 
-  .calm-gradient {
+  .calm-gradient-slate {
     background: linear-gradient(90deg, #1e293b50, #33415550, #47556950, #64748b50);
     background-size: 200% 200%;
     animation: calmGradientAnimation 10s ease infinite;
   }
-
+  .calm-gradient-gray {
+    background: linear-gradient(270deg, #292d3b50, #34373d50, #1f222450, #2e2f3050);
+    background-size: 200% 200%;
+    animation: calmGradientAnimation 20s ease infinite;
+  }
   @keyframes calmGradientAnimation {
     0% {
       background-position: 0% 50%;

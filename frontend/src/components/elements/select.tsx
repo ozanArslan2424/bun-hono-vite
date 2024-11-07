@@ -1,47 +1,44 @@
 import { cn } from "@/lib/utils";
 import * as React from "react";
+import { DescriptionLabel, ErrorLabel, Label } from "./label";
 
 export type SelectProps = {
-  id: string;
-  name: string;
-  children: React.ReactNode;
   label?: string;
+  description?: string;
   errors?: string[];
-} & Omit<React.ComponentProps<"select">, "name" | "id" | "children">;
+} & React.ComponentPropsWithoutRef<"select">;
 
-export const Select = React.forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
-  const { id, name, label, errors, className, children, ...rest } = props;
+export type SelectRef = React.ComponentRef<"select">;
 
+const Select = React.forwardRef<SelectRef, SelectProps>((props, ref) => {
   return (
-    <div className={cn("relative flex flex-col gap-1", label && "pt-2")}>
-      {label && (
-        <label htmlFor={id} className="bg-background absolute left-1.5 top-0 px-1 text-xs font-medium leading-none">
-          {label}
-        </label>
-      )}
+    <div className="flex flex-col gap-1">
+      {props.label && <Label htmlFor={props.id}>{props.label}</Label>}
       <select
-        {...rest}
+        {...props}
         ref={ref}
-        id={id}
-        name={name}
         className={cn(
           "bg-background text-foreground border-primary/50 flex h-10 w-full items-center rounded-md border px-3 transition",
           "placeholder:text-muted-foreground",
           "focus-visible:border-primary focus-visible:outline-none",
-          "disabled:cursor-not-allowed disabled:opacity-50",
-          errors && "border-danger/80 focus-visible:border-warning/60",
-          className
+          props.errors && "border-danger/80 focus-visible:border-warning/60",
+          props.disabled && "pointer-events-none opacity-50",
+          props.className
         )}
       >
-        {children}
+        {props.children}
       </select>
-      {errors && (
-        <span className="text-danger px-0.5 text-sm font-medium leading-none">
-          {errors.map((error) => error).join(" ")}
-        </span>
+      {props.errors ? (
+        <ErrorLabel htmlFor={props.id} errors={props.errors} />
+      ) : (
+        props.description && (
+          <DescriptionLabel htmlFor={props.id}>{props.description}</DescriptionLabel>
+        )
       )}
     </div>
   );
 });
 
 Select.displayName = "Select";
+
+export { Select };

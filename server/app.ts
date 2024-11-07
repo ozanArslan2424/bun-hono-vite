@@ -1,23 +1,29 @@
 import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
 import { logger } from "hono/logger";
-import { authRoute } from "./routes/auth";
-import { booksRoute } from "./routes/books";
+import { booksRoute } from "./routes/books.route";
+import { authMiddleware } from "./middleware";
+import { authRoutes } from "./routes/auth.route";
+import type { HonoType } from "./types";
+import { notesRoute } from "./routes/notes.route";
 
-const app = new Hono();
-
-// console.log all requests
-app.use("*", logger());
+const app = new Hono<HonoType>();
 
 export const apiRoutes = app
   .basePath("/api")
-  // /api/books routes
+  //------------------------------------------ middleware
+  .use(logger())
+  .use((c, n) => authMiddleware(c, n))
+  //------------------------------------------ /api/auth routes handled by better-auth
+  .route("/auth", authRoutes)
+  //------------------------------------------ /api/books routes
   .route("/books", booksRoute)
-  // /api/auth routes handled by better-auth
-  .route("/auth", authRoute);
+  //------------------------------------------ /api/notes routes
+  .route("/notes", notesRoute);
 
-// Serve the frontend
+//-------------------------------------------- serve the frontend
 app.get("*", serveStatic({ root: "./frontend/dist" }));
 app.get("*", serveStatic({ path: "./frontend/dist/index.html" }));
 
+// * export the app at the end
 export { app };

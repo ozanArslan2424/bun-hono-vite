@@ -6,6 +6,7 @@ import { user } from "./auth";
 const createdAt = date("createdAt")
   .notNull()
   .default(sql`(current_timestamp)`);
+
 const updatedAt = date("updatedAt")
   .notNull()
   .default(sql`(current_timestamp)`);
@@ -15,9 +16,7 @@ const userId = text("userId")
   .references(() => user.id);
 
 export const book = sqliteTable("book", {
-  id: text("id")
-    .primaryKey()
-    .$default(() => crypto.randomUUID()),
+  id: text("id").primaryKey(),
   title: text("title").notNull(),
   userId,
   createdAt,
@@ -25,9 +24,7 @@ export const book = sqliteTable("book", {
 });
 
 export const note = sqliteTable("note", {
-  id: text("id")
-    .primaryKey()
-    .$default(() => crypto.randomUUID()),
+  id: text("id").primaryKey(),
   title: text("title").notNull(),
   content: text("content"),
   bookId: text("bookId")

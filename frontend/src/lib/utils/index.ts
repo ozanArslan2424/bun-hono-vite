@@ -10,7 +10,8 @@ export const textTransform = {
   toTitleCase: (str: string) =>
     str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()),
   toSentenceCase: (str: string) => str.charAt(0).toUpperCase() + str.slice(1),
-  toPascalCase: (str: string) => str.replace(/(\w)(\w*)/g, (_, g1, g2) => g1.toUpperCase() + g2.toLowerCase()),
+  toPascalCase: (str: string) =>
+    str.replace(/(\w)(\w*)/g, (_, g1, g2) => g1.toUpperCase() + g2.toLowerCase()),
   toSnakeCase: (str: string) => str.replace(/([a-z])([A-Z])/g, "$1_$2").toLowerCase(),
   toCamelCase: (str: string) => str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase()),
   toKebabCase: (str: string) => str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase(),
@@ -53,6 +54,13 @@ export const timestamp = {
       month: "short",
       day: "numeric",
     }),
+  // how many days ago
+  howManyDaysAgo: (date: string) => {
+    const now = new Date();
+    const created = new Date(date);
+    const diff = now.getTime() - created.getTime();
+    return Math.floor(diff / (1000 * 60 * 60 * 24));
+  },
 };
 
 export function sleep(ms: number) {

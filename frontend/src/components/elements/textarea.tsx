@@ -1,33 +1,46 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { DescriptionLabel, ErrorLabel, Label } from "./label";
 
 export type TextareaProps = {
   id: string;
   name: string;
   label?: string;
   description?: string;
-  error?: string[];
-} & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
+  errors?: string[];
+} & React.ComponentPropsWithoutRef<"textarea">;
 
-export function Textarea({ className, label, description, error, ...props }: TextareaProps) {
+export type TextareaRef = React.ComponentRef<"textarea">;
+
+const Textarea = React.forwardRef<TextareaRef, TextareaProps>((props, ref) => {
   return (
     <div className="flex flex-col gap-2">
-      {label && (
-        <label htmlFor={props.id} className="flex flex-col gap-1">
-          <span className={cn("text-sm font-semibold leading-none", error && "text-red-500")}>{label}</span>
-          {description && <span className="text-muted-foreground text-sm font-medium leading-none">{description}</span>}
-        </label>
-      )}
+      {props.label && <Label htmlFor={props.id}>{props.label}</Label>}
       <textarea
         {...props}
+        ref={ref}
         className={cn(
-          "border-input bg-background placeholder:text-muted-foreground focus-visible:border-primary flex min-h-[80px] w-full rounded-md border px-3 py-2 text-sm transition focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
-          error && "border-danger focus-visible:border-amber-500",
-          className
+          "bg-background text-foreground border-primary/50 flex min-h-20 w-full items-center rounded-md border px-3 transition",
+          "placeholder:text-muted-foreground",
+          "focus-visible:border-primary focus-visible:outline-none",
+          props.errors && "border-danger/80 focus-visible:border-warning/60",
+          props.readOnly && "border-muted text-muted-foreground cursor-not-allowed",
+          props.disabled && "pointer-events-none opacity-50",
+          props.className
         )}
       />
-      {error && <span className="text-sm font-medium leading-none text-red-500">{error}</span>}
+      {props.errors ? (
+        <ErrorLabel htmlFor={props.id} errors={props.errors} />
+      ) : (
+        props.description && (
+          <DescriptionLabel htmlFor={props.id}>{props.description}</DescriptionLabel>
+        )
+      )}
     </div>
   );
-}
+});
+
+Textarea.displayName = "Textarea";
+
+export { Textarea };

@@ -27,6 +27,11 @@ export const settingsFormSchema = z.object({
   image: z.optional(zFile("image", 5 * 1024 * 1024, "File must be under 5MB.")),
 });
 
+export const insertNoteFormSchema = z.object({
+  bookId: z.string().min(3, "Book ID must be at least 3 characters."),
+  title: z.string().min(3, "Title must be at least 3 characters."),
+});
+
 export const insertUserSchema = createInsertSchema(user);
 export const selectUserSchema = createSelectSchema(user);
 

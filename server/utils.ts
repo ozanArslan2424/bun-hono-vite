@@ -4,7 +4,8 @@ import { z } from "zod";
 type EnumValues = [string, ...string[]];
 
 // * zod iso helper
-export const ISO_DATETIME_REGEX = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/;
+export const ISO_DATETIME_REGEX =
+  /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/;
 export const isoDateString = z.string().regex(ISO_DATETIME_REGEX, "Invalid date format.");
 // check if file is instance of File and under 10MB
 export const zFile = (fieldName: string, maxSize?: number, message?: string) =>
@@ -41,4 +42,24 @@ export function getErrorMessage(error: unknown) {
 
   console.error("Caught Error:", message);
   return message;
+}
+
+export function findNullMessage(items: { obj: any; message: string }[]): string | undefined {
+  for (const item of items) {
+    if (isFalsy(item.obj)) {
+      return item.message;
+    }
+  }
+  return undefined;
+}
+
+export function isFalsy(value: any): boolean {
+  return (
+    value === null ||
+    value === undefined ||
+    value === "" ||
+    value === false ||
+    value === 0 ||
+    value.length === 0
+  );
 }

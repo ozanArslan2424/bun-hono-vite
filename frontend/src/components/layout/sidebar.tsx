@@ -1,13 +1,12 @@
-"use client";
 import { Button } from "@/components/elements/button";
-import Link from "@/components/ui/link";
+import Link from "@/components/elements/link";
 import { appInfo, iconSizes } from "@/lib/config";
-import { useIsMobile } from "@/lib/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
-import { useLocation } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ChevronsLeftIcon, CircleDotIcon, CircleIcon, MenuIcon } from "lucide-react";
 import { createContext, ElementRef, useContext, useEffect, useReducer, useRef } from "react";
+import { useLocation } from "react-router-dom";
 
 type ContextValueProps = {
   isOpen: boolean;

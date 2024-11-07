@@ -1,6 +1,6 @@
-import { SelectBook } from "@shared/types";
 import { useQuery } from "@tanstack/react-query";
 import { api, KEYS } from ".";
+import { getSession } from "../auth.client";
 
 export function useAllBooks() {
   return useQuery({
@@ -20,7 +20,11 @@ export function useAllBooks() {
   });
 }
 
-export function useBook(bookId: string) {
+export function useBook(bookId: string | undefined) {
+  if (!bookId) {
+    throw new Error("bookId is required");
+  }
+
   return useQuery({
     queryKey: [KEYS.BOOK, bookId],
     queryFn: async () => {
@@ -31,8 +35,29 @@ export function useBook(bookId: string) {
       }
 
       const data = await res.json();
-      return data as { book: SelectBook };
+
+      return data;
     },
     refetchOnWindowFocus: false,
   });
+}
+
+export function useUserQuery() {
+  const query = useQuery({
+    queryKey: [KEYS.USER],
+    queryFn: async () => {
+      const { data, error } = await getSession();
+
+      if (error) {
+        throw new Error("An error occurred while fetching user");
+      }
+
+      return data;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  const user = query.data?.user;
+
+  return { user };
 }

@@ -54,7 +54,12 @@ export function BreadcrumbPage({ className, ...props }: BreadcrumbPageProps) {
 
 export function BreadcrumbSeparator({ children, className, ...props }: BreadcrumbSeparatorProps) {
   return (
-    <li role="presentation" aria-hidden="true" className={cn("[&>svg]:h-3.5 [&>svg]:w-3.5", className)} {...props}>
+    <li
+      role="presentation"
+      aria-hidden="true"
+      className={cn("[&>svg]:h-3.5 [&>svg]:w-3.5", className)}
+      {...props}
+    >
       {children ?? <ChevronRight />}
     </li>
   );

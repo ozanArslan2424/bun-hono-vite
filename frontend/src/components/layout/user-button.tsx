@@ -6,17 +6,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/elements/dropdown-menu";
 import { iconSizes } from "@/lib/config";
 import { cn } from "@/lib/utils";
-import { logout } from "@shared/auth.client";
-import { SelectUser } from "@shared/types";
+import { logout } from "@/lib/auth.client";
 import { User2Icon } from "lucide-react";
 import { useState } from "react";
-import Link from "../ui/link";
+import Link from "../elements/link";
+import { useUserQuery } from "@/lib/api/get";
 
-export function UserButton({ user }: { user: SelectUser }) {
+export function UserButton() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useUserQuery();
+  if (!user) return;
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
@@ -30,16 +32,15 @@ export function UserButton({ user }: { user: SelectUser }) {
         <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <Link to="/profile">
-          <DropdownMenuButton>Profile</DropdownMenuButton>
-        </Link>
-
         <Link to="/settings">
           <DropdownMenuButton>Settings</DropdownMenuButton>
         </Link>
 
         <DropdownMenuSeparator />
-        <DropdownMenuButton className="hover:bg-danger hover:text-danger-foreground" onClick={() => logout()}>
+        <DropdownMenuButton
+          className="hover:bg-danger hover:text-danger-foreground"
+          onClick={() => logout()}
+        >
           Logout
         </DropdownMenuButton>
       </DropdownMenuContent>

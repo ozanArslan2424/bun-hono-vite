@@ -25,7 +25,11 @@ export function SyntaxHighlighter({ fixedHeight }: SyntaxHighlighterProps) {
         overflowY: "scroll",
       }}
     >
-      <TextInput onChange={setContent} onHeightChange={handleHeightChange} initialHeight={fixedHeight} />
+      <TextInput
+        onChange={setContent}
+        onHeightChange={handleHeightChange}
+        initialHeight={fixedHeight}
+      />
       <TextView content={content} />
     </div>
   );

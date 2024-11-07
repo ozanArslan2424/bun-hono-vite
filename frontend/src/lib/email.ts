@@ -18,6 +18,38 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+type MailOptions = {
+  to: string;
+  subject: string;
+  text: string;
+  html: string;
+};
+
+type OtherMailOptions = Omit<
+  nodemailer.SendMailOptions,
+  "from" | "to" | "subject" | "text" | "html"
+>;
+
+export function sendEmail(options: MailOptions, otherOptions?: OtherMailOptions) {
+  let allOptions: nodemailer.SendMailOptions = {
+    from: emailFrom,
+    ...options,
+  };
+
+  if (otherOptions) {
+    allOptions = { ...allOptions, ...otherOptions };
+  }
+
+  transporter.sendMail({ ...allOptions }, (error, info) => {
+    if (error) {
+      throw new Error(error.message);
+    } else {
+      console.log("Email sent. Info: " + info);
+      return true;
+    }
+  });
+}
+
 export const sendVerificationEmail = async (props: EmailProps) => {
   const verificationURL = `${baseURL}/auth/onboarding/verify-email?userId=${props.userId}&userEmail=${props.userEmail}&verificationToken=${props.verificationToken}`;
 
